@@ -1,0 +1,89 @@
+﻿@model List<FacultyApplication.Models.Faculty>
+
+<script type="text/javascript">
+    function deleteFaculties(facultyId) {
+
+        if (confirm("Are you sure you want to delete?")) {
+
+
+            $.ajax({
+                url: '@Url.Action("DeleteFaculties","Home")',
+                data: {
+                    facultyId: facultyId
+                },
+                success: function (ev) {
+                    alert(ev);
+                    window.location.reload();
+                },
+
+                error: function () {
+                    alert("Fails");
+                },
+
+            })
+
+
+        }
+
+}
+
+    function editFaculties(id) {
+        //  alert(id);
+        window.location.href = "AddFaculty?facultyId=" + id;
+    }
+
+
+
+</script>
+
+<h1>Faculties</h1>
+<table class="table" id="FacultyTable">
+
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Founding Year</th>
+        <th scope="col">Description</th>
+
+    </tr>
+
+
+    @foreach (var faculty in Model)
+    {
+        
+        var color = "white";
+        
+
+        if (faculty.studentGroupsNumber == 0)
+        {
+            color = "red";
+
+        }
+        else if (faculty.studentGroupsNumber == 1 || faculty.studentGroupsNumber == 2)
+        {
+            color = "yellow";
+        }
+        else
+        {
+            color = "green";
+        }
+
+
+
+        <tr style="background-color:@color">
+            <td>@faculty.Name</td>
+            <td>@faculty.FoundingYear</td>
+            <td>@faculty.Description</td>
+            <td>
+                <div class="btn-toolbar">
+                    <input onclick="editFaculties(@faculty.Id)" class="btn btn-primary" type="button" value="Edit">
+                    <input onclick="deleteFaculties(@faculty.Id)" class="btn btn-primary" type="button" value="Delete">
+                </div>
+            </td>
+        </tr>
+
+
+    }
+
+</table>
+
+

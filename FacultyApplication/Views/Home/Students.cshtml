@@ -1,0 +1,88 @@
+﻿@model List<FacultyApplication.Models.Student>
+
+<script type="text/javascript">
+    function deleteStudent(studentId) {
+        
+        if (confirm("Are you sure you want to delete?")) {
+            
+
+            $.ajax({
+                url: '@Url.Action("DeleteStudents","Home")',
+                data: {
+                    studentId: studentId
+                },
+                success: function (ev) {
+                    alert(ev);
+                    window.location.reload();
+                },
+
+                error: function () {
+                    alert("Fails");
+                },
+
+            })
+
+
+        }
+
+}
+
+    
+
+    function editStudent(id) {
+        //  alert(id);
+        window.location.href = "AddStudent?studentId=" + id;
+    }
+
+
+
+</script>
+<h1>Students</h1>
+
+<table class="table table-striped" id="StudentTable">
+
+    <tr>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Age</th>
+        <th scope="col">Sex</th>
+        <th scope="col">Faculty</th>
+        <th scope="col">Group</th>
+        <th scope="col">Address</th>
+        <th scope="col">Description</th>
+        <th scope="col"></th>
+
+    </tr>
+    @foreach (var student in Model)
+    {
+        string color = "green";
+        if (student.Sex == "True")
+        {
+            color = "blue";
+        }
+        else
+        {
+            color = "red";
+        }
+
+        <tr style="background-color:@color">
+            <td>@student.FirstName</td>
+            <td>@student.LastName</td>
+            <td>@student.Age</td>
+            <td>@student.Sex</td>
+            <td>@student.Faculty</td>
+            <td>@student.StudentGroup</td>
+            <td>@student.Address</td>
+            <td>@student.Description</td>
+            <td>
+                <div class="btn-toolbar">
+                    <input onclick="editStudent(@student.Id)" class="btn btn-primary" type="button" value="Edit">
+                    <input onclick="deleteStudent(@student.Id)" class="btn btn-primary" type="button" value="Delete">
+                </div>
+            </td>
+
+        </tr>
+
+    }
+
+</table>

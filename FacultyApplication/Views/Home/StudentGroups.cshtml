@@ -1,0 +1,67 @@
+﻿@model List<FacultyApplication.Models.StudentGroup>
+<script type="text/javascript">
+    function deleteStudentGroup(studentGroupId) {
+
+        if (confirm("Are you sure you want to delete?")) {
+
+
+            $.ajax({
+                url: '@Url.Action("DeleteStudentGroups","Home")',
+                data: {
+                    studentGroupId: studentGroupId
+                },
+                success: function (ev) {
+                    alert(ev);
+                    window.location.reload();
+                },
+
+                error: function () {
+                    alert("Fails");
+                },
+
+            })
+
+
+        }
+
+}
+
+    function editStudentGroup(id) {
+        //  alert(id);
+        window.location.href = "AddStudentGroup?studentGroupId=" + id;
+    }
+
+
+
+</script>
+
+<h1>Student Groups</h1>
+
+<table class="table table-striped" id="StudentGroupTable">
+
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Faculty</th>
+        <th scope="col">Year</th>
+        
+
+    </tr>
+    @foreach (var studentGroup in Model)
+    {
+        <tr>
+            <td>@studentGroup.Name</td>
+            <td>@studentGroup.Description</td>
+            <td>@studentGroup.Faculty</td>
+            <td>@studentGroup.Year</td>
+            <td>
+                <div class="btn-toolbar">
+                    <input onclick="editStudentGroup(@studentGroup.Id)" class="btn btn-primary" type="button" value="Edit">
+                    <input onclick="deleteStudentGroup(@studentGroup.Id)" class="btn btn-primary" type="button" value="Delete">
+                </div>
+            </td>
+        </tr>
+
+    }
+
+</table>

@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "AddStudentGroup";
+}
+
+@model FacultyApplication.Models.StudentGroup
+
+<h2>Student Group</h2>
+
+@using (Html.BeginForm("AddStudentGroup", "Home", FormMethod.Post))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @Html.HiddenFor(x => x.Id)
+
+    <div class="mb-3">
+        @Html.LabelFor(x => x.Faculty)
+        @Html.DropDownListFor(x => x.FacultyId, new SelectList(ViewBag.Faculties, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "FacultyId" })
+        @Html.ValidationMessageFor(x => x.Faculty, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+
+        @Html.LabelFor(x => x.Name)
+        @Html.TextBoxFor(x => x.Name, new { @class = "form-control", placeholder = "Enter Name" })
+        @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger" })
+
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(x => x.Year)
+        @Html.TextBoxFor(x => x.Year, new { @class = "form-control", placeholder = "Enter year", type = "number", min = "1", max = "3" })
+        @Html.ValidationMessageFor(x => x.Year, "", new { @class = "text-danger" })
+
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(x => x.Description)
+        @Html.TextAreaFor(x => x.Description, new { @class = "form-control", placeholder = "Enter description", rows = "8" })
+        @Html.ValidationMessageFor(x => x.Description, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="btn-toolbar">
+        <div class="btn-group btn-toolbar  mx-2" role="group">
+            <button class="btn btn-primary">Save</button>
+
+        </div>
+        <div class="btn-group btn-toolbar  mx-2" role="group">
+            <button class="btn btn-primary">Cancel</button>
+
+        </div>
+
+
+    </div>
+
+}
+
+
+
+
